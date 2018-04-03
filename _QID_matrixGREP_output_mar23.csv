@@ -1,0 +1,25 @@
+file name,prof name,prof QID,instance of
+artist,Artist,Q483501,profession
+Illustrator,Illustrator,Q644687,profession
+politician,Politician,Q82955,profession
+actor,Actor,Q33999,profession
+writer,Writer,Q36180,profession
+painter,Painter,Q1028181,profession
+researcher,Researcher,Q1650915,profession
+journalist,Journalist,Q1930187,profession
+university teacher,University Teacher,Q1622272,profession
+singer,Singer,Q177220,profession
+composer,Composer,Q36834,profession
+poet,Poet,Q49757,profession
+film director,Film Director,Q2526255,filmmaking occupation
+historian,Historian,Q201788,profession
+screenwriter,Screenwriter,Q28389,filmmaking occupation
+architect,Architect,Q42973,profession
+musician,Musician,Q639669,profession
+physician,Physician,Q39631,
+author,Author,Q482980,occupation
+engineer,Engineer,Q81096,profession
+sculptor,Sculptor,Q1281618,profession
+businessperson,Businessperson,Q43845,profession
+novelist,Novelist,Q6625963,profession
+photographer,Photographer,Q33231,profession

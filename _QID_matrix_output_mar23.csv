@@ -1,0 +1,116 @@
+file name,prof name,prof QID,instance of
+Archivists.csv,Archivist,Q635734,profession
+Book publishers (people).csv,publisher,Q2516866,
+Booksellers (people).csv,Bookseller,Q998550,profession
+Film editors.csv,Film editor,Q7042855,filmmaking occupation
+Librarians.csv,Librarian,Q182436,profession
+Radio editors.csv,Radio editor,Q3180462,profession
+Sound editors.csv,Sound editor,Q3180462,profession
+Television editors.csv,Television editor,Q23016178,
+Print editors.csv,editor,Q1607826, profession
+Copy editing.csv,copy editor,Q356139, profession
+Journalists.csv,Journalist,Q1930187
+19th-century journalists1.csv,Journalist1,Q1930187
+19th-century journalists2.csv,Journalist2,Q1930187
+19th-century journalists3.csv,Journalist3,Q1930187
+19th-century journalists4.csv,Journalist4,Q1930187
+20th-century journalists.csv,Journalist5,Q1930187
+21st-century journalists.csv,Journalist6,Q1930187
+American curators.csv,curator,Q780596,profession
+Art collectors.csv,art collector,Q10732476,occupation
+Art critics.csv,art critic,Q4164507,profession
+Art dealers.csv,art dealer,Q173950,profession
+Digital artists.csv,digital artist,Q22812879,occupation
+Film critics.csv,film critic,Q4220892,profession
+Indigenous installation artists of the Americas.csv,installation artist,Q18074503,profession
+Installation artists by nationality.csv,installation artist-2-,Q18074503,profession
+Installation artists.csv,installation artist-3-,Q18074503,profession
+Interdisciplinary artists.csv,interdisciplinary artist,Q3391743,profession
+Land artists.csv,land artist,Q33123562,profession
+Museum directors.csv,museum director,Q22132694,position
+Museum directors.csv,curator-2-,Q780596,profession
+Performance artists by nationality.csv,performance artist,Q10774753,profession
+Performance artists.csv,performance artist,Q10774753,profession
+Photojournalists by nationality.csv,photojournalist,Q957729,profession
+Quilters.csv,quilter,Q46984315,profession
+Spoken word artists.csv,spoken word artist,Q17378128,profession
+Women art historians.csv,art historian,Q1792450,profession
+Women ceramists.csv,ceramist,Q7541856,profession
+Women children's writers.csv,children's writer,Q4853732,profession
+Women choreographers.csv,choreographer,Q2490358,profession
+Women diarists.csv,diarist,Q18939491,occupation
+Women essayists.csv,essayist,Q11774202,profession
+Women historians.csv,historian,Q201788,profession
+Women journalists.csv,journalist,Q1930187,profession
+Women memoirists.csv,memoirist,Q11774156,occupation
+Women novelists.csv,novelist,Q6625963,profession
+Women painters by nationality.csv,painter,Q1028181,profession
+Women painters.csv,painter,Q1028181,profession
+Women poets.csv,poet,Q49757,profession
+Women romantic fiction writers.csv,novelist-2-,Q6625963,profession
+Women science fiction and fantasy writers.csv,science fiction writer,Q18844224,profession
+Women science writers.csv,science writer,Q3745071,profession
+Women watercolorists.csv,watercolourist,Q17505902,profession
+photograpers.csv,photographer,Q33231,profession
+video artists.csv,video artist,Q18216771,profession
+Women academics.csv,academic,Q16631371,profession
+Women activists.csv,activist,Q15253558,occupation
+Women historians.csv,historian,Q201788,profession
+Women in politics.csv,politician,Q82955,profession
+Women musicologists.csv,musicologist,Q14915627,profession
+American women printmakers.csv,Printmaker,Q11569986,profession
+Ballerinas.csv,Ballerina,Q4070300,profession
+#Ballet designers.csv,Ballet designer,,
+Ballroom dancers.csv,Ballroom dancer,Q5716684,profession
+Basket weavers.csv,Basket weaver,Q976015,profession
+#Beadworkers.csv,Beadworker,,
+Belly dancers.csv,Belly dancer,Q5716684,profession
+#Book artists.csv,Book artist,,
+Botanical illustrators.csv,Botanical illustrator,Q3148760,profession
+Cartoonists.csv,Cartoonist,Q1114448,profession
+Cheerleaders.csv,Cheerleader,Q28971125,profession
+Children's book illustrators.csv,Children's book illustrator,,
+Collage artists.csv,Collage artist,Q22343478,
+Comics artists.csv,Comics artist,Q715301,profession
+Contemporary dancers.csv,Contemporary dancer,Q5716684,profession
+Costume designers.csv,Costume designer,Q1323191,filmmaking occupation
+#Drag queens.csv,Drag queen,Q337084,craft
+Engravers.csv,Engraver,Q329439,profession
+Etchers.csv,Etcher,Q10862983,craft
+Fashion illustrators.csv,Fashion illustrator,Q27943388,
+Female comics writers.csv,Comics writer,Q20870256,profession
+Folk dancers.csv,Folk dancer,Q5716684,profession
+Furniture designers.csv,Furniture designer,Q15977949,profession
+Glass artists.csv,Glass artist,Q2865798,craft
+Hip hop dancers.csv,Hip hop dancer,Q5716684,profession
+Hula dancers.csv,Hula dancer,Q5716684,profession
+Illustrators.csv,Illustrator,Q644687,profession
+Interior designers.csv,Interior designer,Q2133309,profession
+Landscape or garden designers.csv,Landscape architect,Q2815948,profession
+Lithographers.csv,Lithographer,Q16947657,historical profession
+Magazine illustrators.csv,Magazine illustrator,Q644687,
+Make-up artists.csv,Make-up artist,Q935666,profession
+Mixed-media artists.csv,Mixed-media artist,Q3391743,
+Multimedia artists.csv,Multimedia artist,Q6934789,
+Muralists.csv,Muralist,Q3374326,profession
+New media artists.csv,New media artist,Q7016454,
+Pastel artists.csv,Pastel artist,Q3391743,
+Poster artists.csv,Poster artist,Q739437,profession
+Potters.csv,Potter,Q3400050,craft
+Printmakers.csv,Printmaker,Q11569986,profession
+Scientific illustrators.csv,Scientific illustrator,Q19507792,profession
+Sculptors.csv,Sculptor,Q1281618,profession
+Sound artists.csv,Sound artist,Q19850998,profession
+Tap dancers.csv,Tap dancer,Q5716684,profession
+Tattoo artists.csv,Tattoo artist,Q1861368,profession
+Textile designers.csv,Textile designer,Q18611810,profession
+#Toy designers.csv,Toy designer,,
+Typographers.csv,Typographer,Q1229025,profession
+Urban planners.csv,Urban planner,Q131062,profession
+Weavers.csv,Weaver,Q437512,occupation
+#Web designers.csv,Web designer,,
+Women architects.csv,architect,Q42973,profession
+Women engravers.csv,engraver,Q329439,profession
+Women graffiti artists.csv,graffiti artist,Q15095148,occupation
+Women graphic designers.csv,graphic designer,Q627325,profession
+Women printmakers.csv,printmaker,Q11569986,profession
