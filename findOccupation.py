@@ -32,10 +32,10 @@ def findOccupationFirstSentence(inputFileName,language, qid, titleOriginal, p21,
 				else:
 					popular = ' '
 				qidLink = info[0].split('/')
-				qid = qidLink[len(qidLink)-1]
-				occupations.append([info[1],qid,popular,info[2]])
-	print occupations
-	# firstSentence = str(firstSentence)
+				occupQID = qidLink[len(qidLink)-1]
+				occupations.append([info[1],occupQID,popular,info[2]])
+	# print occupations
+	firstSentence = str(firstSentence)
 	print "----------------------------------\n"+firstSentence+"\n------------------------------------\n"
 	# outputTXT.write("----------------------------------------\n"+firstSentence+"\n")
 	for index, x in enumerate(occupations):

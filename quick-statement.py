@@ -7,7 +7,7 @@ wikipedias = setup.wikipediaOptions
 minCount = setup.minCount
 popularCount = setup.popularCountSteps
 # accuracy = setup.accuracy
-
+name = 'pre2017 new'
 firstlineOccupation = True
 firstlineALT = True
 occupations = []
@@ -15,15 +15,15 @@ wpEn = "Q328"
 wikipediaQID = ''
 referencedIn = "S143"
 propertyId = "P106"
-outputCSV = open('output-qs.csv', 'w')
+outputCSV = open(name+'-output-qs.csv', 'w')
 csvWriter = csv.writer(outputCSV)
 csvWriter.writerow(['QID','property id','occupationQID','referenced in','wikipediaQID'])
 
-outputCSVALT = open('output-altOccupation-accuracy100.csv', 'w')
+outputCSVALT = open(name+'-output-altOccupation-accuracy100.csv', 'w')
 csvWriterALT = csv.writer(outputCSVALT)
 csvWriterALT.writerow(['language','title','QID','p21','gender','p106','occupation description','popular','accept value','occupation','alt occupation','pw first sentence'])
 
-outputCSVNEW = open('output-NEWOccupation.csv', 'w')
+outputCSVNEW = open(name+'-output-NEWOccupation.csv', 'w')
 csvWriterNEW = csv.writer(outputCSVNEW)
 csvWriterNEW.writerow(['language','title','QID','p21','gender','p106','occupation description','popular','accept value','occupation','alt occupation','pw first sentence'])
 
@@ -46,8 +46,8 @@ with open('occupations-withDescriptions.csv', 'r') as f:
 			occupations.append([info[1],qid,popular,info[2]])
 #if it throws an error saying "_csv.Error: new-line character seen in unquoted field -
 #do you need to open the file in universal-newline mode?"
-#then you should save the document as csv file again
-with open('output-found-occupations-minCount5-popular[997, 100].csv','r') as csvFile:
+#then you should save the document as plan text csv file again
+with open('AF WD Found Occupation for verification - pre2017 new.csv','r') as csvFile:
 	reader = csv.reader(csvFile)
 	for row in reader:
 		if firstlineALT:    #skip first line

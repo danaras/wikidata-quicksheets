@@ -1,6 +1,6 @@
 from urllib2 import Request, urlopen, URLError
 import os, json, csv
-
+#output from categories: 
 def outputFiles(inputFileName, qid, occupation, occupationQID,title, language, p21, gender, firstSentence):
 	lines = []
 	linesQS = []
