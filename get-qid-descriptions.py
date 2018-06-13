@@ -3,6 +3,7 @@ from urllib2 import Request, urlopen, URLError
 inputFileName = 'occupations to sort green or red.csv'
 outputCSV = open(inputFileName[:-4]+'-withDescriptions.csv', 'w')
 csvWriter = csv.writer(outputCSV)
+
 def getQIDValue(QID):
 	if QID:
 		pRequest = Request('https://www.wikidata.org/w/api.php?action=wbgetentities&ids='+QID+'&props=labels&languages=en&format=json')
@@ -37,7 +38,7 @@ def getQIDdescription(qid):
 	except:
 		return ""
 		print "no description"
-def processFile(inputFileName,qidColumn, titleColumn):
+def processFile(inputFileName, qidColumn, titleColumn):
 	firstline = True
 	with open(inputFileName) as csvFile:
 		reader = csv.reader(csvFile)

@@ -1,3 +1,4 @@
+
 class SettingsForFindOccupation:
 	def __init__(self):
 		self.firstline = True
@@ -10,3 +11,21 @@ class SettingsForQS:
 		self.popularCountSteps = [997,100]
 		self.accuracy = 90
 		self.minCount = 0
+
+#Values used by property P172
+# SELECT ?value ?valueLabel ?valueDescription ?valueAltLabel ?ct ?sampleitem ?sampleitemLabel
+# WHERE
+# {
+#   {
+#     SELECT ?value (count(*) as ?ct) (SAMPLE(?item) as ?sampleitem)
+#     WHERE
+#     {
+#       ?item wdt:P172 ?value
+#     }
+#
+#     GROUP BY ?value
+#     ORDER BY DESC(?ct)
+#   }
+#   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" }
+# }
+# ORDER BY DESC(?ct) ASC(?value)

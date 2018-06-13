@@ -1,8 +1,14 @@
-rowEdit = ['language','title','QID','p21','gender','p106','popular','accept value','occupation','occupation description','alt occupation','pw first sentence']
-rowHuman = ['language','title','QID','p21','gender','p106','occupation','pw first sentence']
-rowQS = ['QID of person', 'P106', 'QID of occupation', 'stated in', 'enwiki']
-
-inputFileName = 'output-drafts'
+debug = False
+useCategories = False
+useFirstSentence = False
+getReferences = True
+pValues = [['P21','gender'],['P172','ethnic group']]
+genderSelect = ["male","female","transgender female","transgender male","non-binary","intersex","transgender","hermaphrodite","neutral sex"] #choose from 'female', 'male', etc.
+rowEdit = ['language','title','QID',pValues[0][0],pValues[0][1],pValues[1][0],'popular','accept value',pValues[1][1],pValues[1][1]+' description','alt '+pValues[1][1],'WP first sentence']
+rowHuman = ['language','title','QID',pValues[0][0],pValues[0][1],pValues[1][0],pValues[1][1],'WP first sentence']
+rowQS = ['QID of person', pValues[1][0], 'QID of '+pValues[1][1], 'stated in', 'enwiki']
+rowRef = ['language','title','QID',pValues[0][0],pValues[0][1],pValues[1][0],pValues[1][1],'Reference Link', 'context']
+inputFileName = 'list'
 matrixName = '_QID_matrix_output_mar23.csv'
 matrixGrepName = '_QID_matrixGREP_output_mar23.csv'
 grep = True
