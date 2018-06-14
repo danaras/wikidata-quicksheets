@@ -44,52 +44,48 @@ class References:
 				namelist.append(word)
 		return namelist
 	def findKeyword(self, text, link):
+		# debugFile = open('debug.txt', 'a+')
 		nameList = self.convertTitletoList()
 		logging.info(nameList)
 		pValueList = self.getAsKnownAs()
 		logging.info(pValueList)
 		context = []
 		if text:
-			f = open('workfile.txt', 'w')
 			try:
 				cleanText = html2text.html2text(text)
 				cleanText = unicodedata.normalize('NFKD', cleanText).encode('ascii','ignore')
 				output = cStringIO.StringIO()
 				output.write(cleanText)
 				content = output.getvalue()
-				f.write(content)
-				f.close()
-				with open('workfile.txt', 'r') as f2:
-					# debugfile = open('debug.txt', 'a+')
-					# lines = ''
-					prevLine = ''
-					for num, line in enumerate(f2):
-						nextLine = next(f2)
-						lines = prevLine.replace("\n"," ")+line.replace("\n"," ")+nextLine.replace("\n"," ")
-						# lines += line.replace("\n"," ")
-						# print line
-						# logging.info(num)
-						if any(name in line for name in nameList):
-							# print name
-							# print lines
-							# debugfile.write("####################################")
-							# debugfile.write(lines+"\n")
-							# debugfile.flush()
-							for keyword in pValueList:
-								# logging.info(keyword)
-								searchKeyword = re.search(r'\b'+re.escape(keyword)+r'\b',lines, re.IGNORECASE)
-								if searchKeyword:
-									logging.info("found pValue in Reference link")
-									logging.critical(keyword+"--------"+ line+"----------"+link)
-									context.append(lines)
-						# if (num is not 0) and (num % 3 == 0):
-						# 	lines = ''
-						prevLine = line
-					# debugfile.close()
+				# prevLine = ''
+				textList = filter(None, content.splitlines())
+				# print len(textList)
+				# str_list = filter(None, str_list)
+				for i in range(0,len(textList)):
+					if i==0 and i!=len(textList)-1:
+						lines = textList[i]+" "+textList[i+1]
+					elif i>0 and i+1<len(textList):
+						lines = textList[i-1]+" "+textList[i]+" "+textList[i+1]
+					elif i==len(textList)-1 and i-1>0:
+						lines = textList[i-1]+" "+textList[i]
+					else:
+						lines = textList[i]
+					if any(name in textList[i] for name in nameList):
+						# print lines
+						for keyword in pValueList:
+							# logging.info(keyword)
+							searchKeyword = re.search(r'\b'+re.escape(keyword)+r'\b',lines, re.IGNORECASE)
+							if searchKeyword:
+								logging.info("found pValue in Reference link")
+								logging.critical(keyword+"--------"+ lines+"----------"+link)
+								context.append(lines)
+								# debugFile.write("##################################################################\n")
+								# debugFile.write(content)
+					# prevLine = line
 			except:
 				logging.info("error finding keyword########################################")
-				# print "something wrong"
-
+				print "something wrong"
+		# debugFile.close()
 		return context
 
 	def openRefLink(self, links):
@@ -118,21 +114,17 @@ class References:
 		refLinks = []
 		# foundRef.write(name+'\n')
 		inReferences = False
-		f = open('workfileWP.txt', 'w')
-		f.write(text)
-		f.close()
-		with open('workfileWP.txt', 'r') as f2:
-			for line in f2:
-				if '<ol class="references">' in line:
-					inReferences = True
-					logging.info("in references")
-				if inReferences:
-					link = re.search(r'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)',line)
-					if link:
-						refLinks.append(link.group())
-					if '</ol>' in line:
-						inReferences = False
-						logging.info("out of references")
+		for line in text.splitlines():
+			if '<ol class="references">' in line:
+				inReferences = True
+				logging.info("in references")
+			if inReferences:
+				link = re.search(r'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)',line)
+				if link:
+					refLinks.append(link.group())
+				if '</ol>' in line:
+					inReferences = False
+					logging.info("out of references")
 		return refLinks
 
 	def getWikiHTML(self):
