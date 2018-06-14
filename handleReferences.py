@@ -6,7 +6,7 @@ import html2text
 import unicodedata
 import cStringIO
 import re
-
+from variables import *
 
 #TODO ask about where References class should be used, because it will slow the code a lot.
 class References:
@@ -29,10 +29,23 @@ class References:
 				if self.pValue == info[1]:
 					pValueList.append(info[1])
 					logging.info(info[4])
-					alt = info[4].split(", ")
+					alt = info[4].split(', ')
 					pValueList.extend(alt)
 		return pValueList
-	def findKeyword(self, text):
+	def convertTitletoList(self):
+		namelist = []
+		eliminationList = ['.', '"']
+		name = self.title.split(',')
+		name = name[0]
+		splitName = name.split(' ')
+		logging.info(splitName)
+		for word in splitName:
+			if not any(char in word for char in eliminationList) and len(word)>1 and word[0].isupper():
+				namelist.append(word)
+		return namelist
+	def findKeyword(self, text, link):
+		nameList = self.convertTitletoList()
+		logging.info(nameList)
 		pValueList = self.getAsKnownAs()
 		logging.info(pValueList)
 		context = []
@@ -46,15 +59,36 @@ class References:
 				content = output.getvalue()
 				f.write(content)
 				f.close()
-				f2 = open('workfile.txt', 'r')
-				for line in f2:
-					for keyword in pValueList:
-						if keyword.lower() in line.lower():
-							logging.info("found pValue in Reference link")
-							logging.info(keyword+"--------"+ line)
-							context.append(line)
+				with open('workfile.txt', 'r') as f2:
+					# debugfile = open('debug.txt', 'a+')
+					# lines = ''
+					prevLine = ''
+					for num, line in enumerate(f2):
+						nextLine = next(f2)
+						lines = prevLine.replace("\n"," ")+line.replace("\n"," ")+nextLine.replace("\n"," ")
+						# lines += line.replace("\n"," ")
+						# print line
+						# logging.info(num)
+						if any(name in line for name in nameList):
+							# print name
+							# print lines
+							# debugfile.write("####################################")
+							# debugfile.write(lines+"\n")
+							# debugfile.flush()
+							for keyword in pValueList:
+								# logging.info(keyword)
+								searchKeyword = re.search(r'\b'+re.escape(keyword)+r'\b',lines, re.IGNORECASE)
+								if searchKeyword:
+									logging.info("found pValue in Reference link")
+									logging.critical(keyword+"--------"+ line+"----------"+link)
+									context.append(lines)
+						# if (num is not 0) and (num % 3 == 0):
+						# 	lines = ''
+						prevLine = line
+					# debugfile.close()
 			except:
-				logging.info("error finding keyword")
+				logging.info("error finding keyword########################################")
+				# print "something wrong"
 
 		return context
 
@@ -64,7 +98,7 @@ class References:
 			logging.info(link)
 			context = []
 			try:
-				response = urllib2.urlopen(link)
+				response = urllib2.urlopen(link, timeout=5)
 				html = unicode(response.read(), errors = 'ignore')
 				# logging.info(html)
 			except :
@@ -72,7 +106,7 @@ class References:
 				logging.info("error, so skipping this one")
 				continue
 			html = unicodedata.normalize('NFKD', html).encode('ascii','ignore')
-			context = self.findKeyword(html)
+			context = self.findKeyword(html, link)
 			linkandContext[link] = context
 		logging.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		logging.info(linkandContext)
@@ -84,21 +118,21 @@ class References:
 		refLinks = []
 		# foundRef.write(name+'\n')
 		inReferences = False
-		f = open('workfile.txt', 'w')
+		f = open('workfileWP.txt', 'w')
 		f.write(text)
 		f.close()
-		f2 = open('workfile.txt', 'r')
-		for line in f2:
-			if '<ol class="references">' in line:
-				inReferences = True
-				logging.info("in references")
-			if inReferences:
-				link = re.search(r'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)',line)
-				if link:
-					refLinks.append(link.group())
-				if '</ol>' in line:
-					inReferences = False
-					logging.info("out of references")
+		with open('workfileWP.txt', 'r') as f2:
+			for line in f2:
+				if '<ol class="references">' in line:
+					inReferences = True
+					logging.info("in references")
+				if inReferences:
+					link = re.search(r'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)',line)
+					if link:
+						refLinks.append(link.group())
+					if '</ol>' in line:
+						inReferences = False
+						logging.info("out of references")
 		return refLinks
 
 	def getWikiHTML(self):
@@ -106,7 +140,7 @@ class References:
 		WPlink = "https://en.wikipedia.org/wiki/"
 		logging.info(WPlink + title)
 		try:
-			response = urllib2.urlopen(WPlink + title)
+			response = urllib2.urlopen(WPlink + title, timeout=5)
 			html = unicode(response.read(), errors = 'ignore')
 			html = unicodedata.normalize('NFKD', html).encode('ascii','ignore')
 			return html
@@ -116,8 +150,16 @@ class References:
 
 # uncomment the following lines to test the class
 # allInfo = {}
-# occupation = "african-american"
-# lala = References("Deval Patrick", occupation)
+# if debug:
+# 	outlevel = logging.DEBUG
+# else:
+#
+# 	outlevel = logging.CRITICAL
+# logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%I:%M:%S %p: ')
+# logging.getLogger().setLevel(outlevel)
+#
+# occupation = "African Americans"
+# lala = References("JR Hutson", occupation, "pList.csv")
 # laHTML = lala.getWikiHTML()
 # # logging.info(laHTML)
 # laLinks = lala.findReferences(laHTML)

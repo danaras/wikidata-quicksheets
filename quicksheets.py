@@ -78,6 +78,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 			titleOriginal = info[1] #get the title
 			title = titleOriginal.replace(' ', '+') #format the title for wikidata api query
 			logging.info(language)
+			logging.critical("##########################################")
 			logging.critical(titleOriginal)
 			titleWP=titleOriginal.replace(' ', '%20') #format the title for wikipedia api query
 			logging.info(titleWP)
@@ -125,7 +126,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 					for link in refLinks:
 						if link in allInfo:
 							for context in allInfo[link]:
-								logging.info(occupation + " ------------ " + link + " -------- " + context)
+								logging.info(p2Value + " ------------ " + link + " -------- " + context)
 								csvWriterRef.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, link, context])
 								outputRef.flush()
 

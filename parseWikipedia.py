@@ -53,10 +53,10 @@ class parseWikipedia():
 
 	def getReferences(self):
 		logging.info("getting ref")
-lala = parseWikipedia("en", "Mako%20Idemitsu")
-title = lala.getRedirect()
-logging.info(title)
-lala.getWikipediaJSON()
-logging.info(lala.json)
-lalasentence = lala.getFirstSentence()
-logging.info(lalasentence)
+# lala = parseWikipedia("en", "Mako%20Idemitsu")
+# title = lala.getRedirect()
+# logging.info(title)
+# lala.getWikipediaJSON()
+# logging.info(lala.json)
+# lalasentence = lala.getFirstSentence()
+# logging.info(lalasentence)
