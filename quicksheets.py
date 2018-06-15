@@ -127,7 +127,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 						if link in allInfo:
 							for context in allInfo[link]:
 								logging.info(p2Value + " ------------ " + link + " -------- " + context)
-								csvWriterRef.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, link, context])
+								csvWriterRef.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value,'',link, context])
 								outputRef.flush()
 
 				csvWriterFemaleGood.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
