@@ -84,13 +84,13 @@ class References:
 					# prevLine = line
 			except:
 				logging.info("error finding keyword########################################")
-				print "something wrong"
+				# print "something wrong"
 		# debugFile.close()
 		return context
 
 	def openRefLink(self, links):
 		linkandContext = {}
-		for link in links:
+		for index,link in enumerate(links):
 			logging.info(link)
 			context = []
 			try:
@@ -104,6 +104,8 @@ class References:
 			html = unicodedata.normalize('NFKD', html).encode('ascii','ignore')
 			context = self.findKeyword(html, link)
 			linkandContext[link] = context
+			if index == refLinkLimit - 1:
+				break
 		logging.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		logging.info(linkandContext)
 		return linkandContext
@@ -151,7 +153,7 @@ class References:
 # logging.getLogger().setLevel(outlevel)
 #
 # occupation = "African Americans"
-# lala = References("JR Hutson", occupation, "pList.csv")
+# lala = References("Harriet Hemings", occupation, "pList.csv")
 # laHTML = lala.getWikiHTML()
 # # logging.info(laHTML)
 # laLinks = lala.findReferences(laHTML)
