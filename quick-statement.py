@@ -54,6 +54,7 @@ class QuickStatement:
 #then you should save the document as plan text csv file again
 	def parseInputFile(self):
 		with open(self.name+'.csv','r') as csvFile:
+			self.openCSVtoWrite()
 			firstline = True
 			reader = csv.reader(csvFile)
 			for row in reader:
@@ -64,7 +65,7 @@ class QuickStatement:
 				if nonWikiRef:
 					if info[7]:
 						if 'y' == info[7]:
-							csvWriterRef.writerow([])
+							self.csvWriterRef.writerow([info[1],info[2],pValues[1][0],info[6],info[5],statedIn,info[8],info[9]])
 				else:
 					if info[8]:
 						if "new" in info[8]:
