@@ -1,16 +1,14 @@
 import os, csv
+import logging
 # from fuzzywuzzy import fuzz
-from settings import SettingsForFindOccupation
+from settings import *
 from variables import *
 
 
 def findFromFirstSentence(inputFileName,language, qid, titleOriginal, firstSentence):
 	lines = []
 	found = False
-	setup = SettingsForFindOccupation()
 	firstline = True
-	minCount = setup.minCount
-	popularCount = setup.popularCount
 	popular = ''
 	pValueList = []
 	fileName = inputFileName+' Outputs/needs human review/output-found-'+pValues[1][1]+'-minCount'+str(minCount)+'-popular'+str(popularCount)+'.csv'
@@ -36,9 +34,9 @@ def findFromFirstSentence(inputFileName,language, qid, titleOriginal, firstSente
 				qidLink = info[0].split('/')
 				pqid = qidLink[len(qidLink)-1]
 				pValueList.append([info[1],pqid,popular,info[2]])
-	# print occupations
+	# logging.info(occupations)
 	firstSentence = str(firstSentence)
-	print "----------------------------------\n"+firstSentence+"\n------------------------------------\n"
+	logging.info("----------------------------------\n"+firstSentence+"\n------------------------------------\n")
 	# outputTXT.write("----------------------------------------\n"+firstSentence+"\n")
 	for index, x in enumerate(pValueList):
 		if x[0] in firstSentence:

@@ -1,12 +1,11 @@
 import csv
 # from fuzzywuzzy import fuzz
-from settings import SettingsForQS
+from settings import *
 from variables import *
 
 setup = SettingsForQS()
-wikipedias = setup.wikipediaOptions
-minCount = setup.minCount
-popularCount = setup.popularCountSteps
+wikipedias = wikipediaOptions
+popularCount = popularCountSteps
 
 class QuickStatement:
 	def __init__(self):

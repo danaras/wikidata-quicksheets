@@ -1,6 +1,7 @@
 from urllib2 import Request, urlopen, URLError
 import os, json, csv
-#output from categories: 
+import logging
+#output from categories:
 def outputFiles(inputFileName, qid, occupation, occupationQID,title, language, p21, gender, firstSentence):
 	lines = []
 	linesQS = []
@@ -9,7 +10,7 @@ def outputFiles(inputFileName, qid, occupation, occupationQID,title, language, p
 	outputQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.csv', 'ab+')
 	csvWriterQS = csv.writer(outputQS)
 
-	# print "length ===================== "+str(os.stat('Category Outputs/'+occupation+occupationQID+'.csv').st_size)
+	# logging.info("length ===================== "+str(os.stat('Category Outputs/'+occupation+occupationQID+'.csv').st_size))
 	if os.stat(inputFileName+" Outputs/Category Outputs CSV/"+occupation+occupationQID+'.csv').st_size == 0:
 		# csvWriter.writerow(['QID of person', 'P106', 'QID of occupation', 'stated in', 'enwiki'])
 		csvWriter.writerow(['language','title','QID','p21','gender','p106','occupation','pw first sentence'])
@@ -75,23 +76,23 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 		wikiData = response.read()
 		jsonData = json.loads(wikiData)
 	except:
-		print 'General error while loading api request'
+		logging.info('General error while loading api request')
 	try:
 		keys = jsonData['query']['pages'].keys()
 	except:
-		print "cannot find page keys"
+		logging.info("cannot find page keys")
 	try:
 		categories=(jsonData['query']['pages'][keys[0]]['categories'])
-		print categories
+		logging.info(categories)
 	except:
-		print "cannot find categories"
+		logging.info("cannot find categories")
 	if categories:
 		for each in categories:
 			outputCat.write(title.replace('%20', ' ')+'\n')
 			outputCat.write(each['title'].encode('utf-8')+'\n')
 			occupation = ''
 			occupationQID = ''
-			print each['title']
+			logging.info(each['title'])
 			category = each['title']
 			if 'Category:' in category:
 				category = category[9:]
@@ -100,9 +101,9 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 				if isItGrep:
 					#outputCat.write("matrix---------------"+x[0].lower()+'\n')
 					#outputCat.write("wp-------------------"+category.lower()+'\n')
-					# print "matrix---------------"+x[0].lower()
-					# print "wp-------------------"+category.lower()
-					# print "grep"
+					# logging.info("matrix---------------"+x[0].lower())
+					# logging.info("wp-------------------"+category.lower())
+					# logging.info("grep")
 					if x[0].lower() in category.lower():
 
 						occupation = x[1]
@@ -123,5 +124,5 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 						found = False
 				if found:
 					totalFound = True
-	print "*****************************"+str(totalFound)
+	logging.info("*****************************"+str(totalFound))
 	return totalFound

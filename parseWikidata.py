@@ -4,6 +4,7 @@ import json
 import re
 import logging
 
+
 class parseWikidata:
 	def __init__(self,language,title):
 		self.language = language

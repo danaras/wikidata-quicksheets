@@ -7,6 +7,7 @@ import re
 import logging, sys
 logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%I:%M:%S %p: ')
 
+from settings import *
 from QIDfromCategories import getQidFromCategories
 from findFromFirstSentence import findFromFirstSentence
 from parseWikidata import parseWikidata
@@ -23,7 +24,7 @@ else:
 
 logging.getLogger().setLevel(outlevel)
 
-
+inputFileName = inputFileNameQuickSheets
 
 
 logging.debug('A debug message!')

@@ -6,7 +6,9 @@ import html2text
 import unicodedata
 import cStringIO
 import re
+from settings import *
 from variables import *
+
 
 #TODO ask about where References class should be used, because it will slow the code a lot.
 class References:
