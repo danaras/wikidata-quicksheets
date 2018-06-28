@@ -1,7 +1,6 @@
 import csv
 # from fuzzywuzzy import fuzz
-from settings import *
-from variables import *
+from masterSettings import *
 
 setup = SettingsForQS()
 wikipedias = wikipediaOptions

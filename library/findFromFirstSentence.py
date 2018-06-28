@@ -1,8 +1,7 @@
 import os, csv
 import logging
 # from fuzzywuzzy import fuzz
-from settings import *
-from variables import *
+from masterSettings import *
 
 
 def findFromFirstSentence(inputFileName,language, qid, titleOriginal, firstSentence):
@@ -17,7 +16,7 @@ def findFromFirstSentence(inputFileName,language, qid, titleOriginal, firstSente
 	csvWriter = csv.writer(outputCSV)
 
 
-	with open(pValueListName+'.csv', 'r') as f:
+	with open('resources/'+pValueListName, 'r') as f:
 		reader = csv.reader(f)
 		for line in reader:
 			if firstline:    #skip first line

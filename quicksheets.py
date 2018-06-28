@@ -7,13 +7,12 @@ import re
 import logging, sys
 logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%I:%M:%S %p: ')
 
-from settings import *
-from QIDfromCategories import getQidFromCategories
-from findFromFirstSentence import findFromFirstSentence
-from parseWikidata import parseWikidata
-from parseWikipedia import parseWikipedia
-from handleReferences import References
-from variables import *
+from library.masterSettings import *
+from library.QIDfromCategories import getQidFromCategories
+from library.findFromFirstSentence import findFromFirstSentence
+from library.parseWikidata import parseWikidata
+from library.parseWikipedia import parseWikipedia
+from library.handleReferences import References
 
 print debug
 if debug:
@@ -117,7 +116,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 				#if the title is a specified gender and has the secondary P value write to the good.csv file
 				if getReferences:
 					allInfo = {}
-					ref = References(titleOriginal, p2Value, "pList.csv")
+					ref = References(titleOriginal, p2Value)
 					refHTML = ref.getWikiHTML()
 					# logging.info(laHTML)
 					refLinks = ref.findReferences(refHTML)

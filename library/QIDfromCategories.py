@@ -59,7 +59,7 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 	matrixInfo = []
 	firstlineMatrix = True
 
-	with open(matrixName, 'r') as matrixFile:
+	with open('resources/'+matrixName, 'r') as matrixFile:
 		reader = csv.reader(matrixFile)
 		for line in reader:
 			if firstlineMatrix:    #skip first line

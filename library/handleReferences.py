@@ -6,22 +6,20 @@ import html2text
 import unicodedata
 import cStringIO
 import re
-from settings import *
-from variables import *
-
+from masterSettings import *
 
 #TODO ask about where References class should be used, because it will slow the code a lot.
 class References:
-	def __init__(self, title, pValue, plistName):
+	def __init__(self, title, pValue):
 		self.title = title
 		self.pValue = pValue
 		self.refLinks = []
-		self.plistName = plistName
+		self.plistName = pValueListName
 
 	def getAsKnownAs(self):
 		pValueList = []
 		firstline = True
-		with open(self.plistName, 'r') as f:
+		with open('resources/'+self.plistName, 'r') as f:
 			reader = csv.reader(f)
 			for line in reader:
 				if firstline:    #skip first line
