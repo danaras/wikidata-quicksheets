@@ -144,25 +144,25 @@ class References:
 			logging.info(e)
 			logging.info("error reaching wikipedia page for references")
 
-# uncomment the following lines to test the class
-# allInfo = {}
-# if debug:
-# 	outlevel = logging.DEBUG
-# else:
-#
-# 	outlevel = logging.CRITICAL
-# logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%I:%M:%S %p: ')
-# logging.getLogger().setLevel(outlevel)
-#
-# occupation = "African Americans"
-# lala = References("Harriet Hemings", occupation, "pList.csv")
-# laHTML = lala.getWikiHTML()
-# # logging.info(laHTML)
-# laLinks = lala.findReferences(laHTML)
-# # logging.info(laLinks)
-# allInfo = lala.openRefLink(laLinks)
-# logging.info(allInfo)
-# for link in laLinks:
-# 	if link in allInfo:
-# 		for context in allInfo[link]:
-# 			logging.info(occupation + " ------------ " + link + " -------- " + context)
+if __name__ == "__main__":
+	allInfo = {}
+	if debug:
+		outlevel = logging.DEBUG
+	else:
+
+		outlevel = logging.CRITICAL
+	logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%I:%M:%S %p: ')
+	logging.getLogger().setLevel(outlevel)
+
+	occupation = "African Americans"
+	lala = References("Harriet Hemings", occupation, "pList.csv")
+	laHTML = lala.getWikiHTML()
+	# logging.info(laHTML)
+	laLinks = lala.findReferences(laHTML)
+	# logging.info(laLinks)
+	allInfo = lala.openRefLink(laLinks)
+	logging.info(allInfo)
+	for link in laLinks:
+		if link in allInfo:
+			for context in allInfo[link]:
+				logging.info(occupation + " ------------ " + link + " -------- " + context)

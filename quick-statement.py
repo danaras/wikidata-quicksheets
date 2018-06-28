@@ -87,6 +87,6 @@ class QuickStatement:
 								csvWriter.writerow([info[2], propertyId, p2QID, referencedIn, wikipediaQID])
 
 					wikipediaQID = ''
-
-QS = QuickStatement()
-QS.parseInputFile()
+if __name__ == "__main__":
+	QS = QuickStatement()
+	QS.parseInputFile()

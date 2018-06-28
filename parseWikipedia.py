@@ -50,13 +50,16 @@ class parseWikipedia():
 			return firstSentence
 		except:
 			logging.info("problem getting first sentence")
+	#
+	# def getReferences(self):
+	# 	logging.info("getting ref")
 
-	def getReferences(self):
-		logging.info("getting ref")
-# lala = parseWikipedia("en", "Mako%20Idemitsu")
-# title = lala.getRedirect()
-# logging.info(title)
-# lala.getWikipediaJSON()
-# logging.info(lala.json)
-# lalasentence = lala.getFirstSentence()
-# logging.info(lalasentence)
+# if this module is run directly, the following lines of code will run
+if __name__ == "__main__":
+	lala = parseWikipedia("en", "Mako%20Idemitsu")
+	title = lala.getRedirect()
+	logging.info(title)
+	lala.getWikipediaJSON()
+	logging.info(lala.json)
+	lalasentence = lala.getFirstSentence()
+	logging.info(lalasentence)
