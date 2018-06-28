@@ -11,10 +11,10 @@ try:
 except ImportError:  # pragma: no cover
     pass
 
-from html2text.compat import urlparse, HTMLParser
-from html2text import config
+from compat import urlparse, HTMLParser
+import config
 
-from html2text.utils import (
+from utils import (
     name2cp,
     unifiable_n,
     google_text_emphasis,
