@@ -4,7 +4,7 @@ import logging
 from masterSettings import *
 
 
-def findFromFirstSentence(inputFileName,language, qid, titleOriginal, firstSentence):
+def findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence):
 	lines = []
 	found = False
 	firstline = True

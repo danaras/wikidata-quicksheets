@@ -1,7 +1,7 @@
 
 #This is the type of QuickSheets you want to prepare. Comment out the one you are not doing by putting a # at the start of that line.
 searchFirstSentence = True
-lookForReferences = True
+lookForReferences = False
 matchCategories = True
 
 #This is the property you are searching for

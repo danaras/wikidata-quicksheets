@@ -21,6 +21,8 @@ entitiesFound = False
 
 useFirstSentence = False
 useCategories = False
+getReferences = False
+
 
 
 if searchFirstSentence == True:

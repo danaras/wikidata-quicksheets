@@ -105,13 +105,13 @@ with open(inputFileName+'.csv','rb') as csvfile:
 		WD.getPData(pValues[1][0])
 		logging.info(WD.pData)
 		# logging.info(pList21)
-		p1 = WD.pData[pValues[0][0]][0]
-		p1Value = WD.pData[pValues[0][0]][1]
-		p2 = WD.pData[pValues[1][0]][0]
-		p2Value = WD.pData[pValues[1][0]][1]
-#"female" becomes a variable and get assigned (m,f,t, all)
-		if any(p1Value.lower() in s.lower() for s in genderSelect):
-#make p2 as a variable
+		p1 = WD.pData[pValues[0][0]][0].decode().encode('utf-8')
+
+		p1Value = WD.pData[pValues[0][0]][1].decode().encode('utf-8')
+		p2 = WD.pData[pValues[1][0]][0].decode().encode('utf-8')
+		p2Value = WD.pData[pValues[1][0]][1].decode().encode('utf-8')
+		print titleOriginal+" --- "+p1+" --- "+p1Value
+		if any(p1Value.lower() ==  s.lower() for s in genderSelect):
 			if p2Value:
 				#if the title is a specified gender and has the secondary P value write to the good.csv file
 				if getReferences:
@@ -142,13 +142,13 @@ with open(inputFileName+'.csv','rb') as csvfile:
 						if useFirstSentence:
 							if not foundGrepCat:
 								#if not found in categories then find p2Value through WP first sentence
-								foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, titleOriginal, firstSentence)
+								foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence)
 								if not foundFirstSentence:
 									csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
 									outputFemaleLack.flush()
 				else:
 					if useFirstSentence:
-						foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, titleOriginal, firstSentence)
+						foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence)
 						if not foundFirstSentence:
 							csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
 							outputFemaleLack.flush()
