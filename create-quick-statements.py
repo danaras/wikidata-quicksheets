@@ -1,35 +1,33 @@
 import csv
 # from fuzzywuzzy import fuzz
-from masterSettings import *
+from library.masterSettings import *
 
-setup = SettingsForQS()
 wikipedias = wikipediaOptions
-popularCount = popularCountSteps
 
 class QuickStatement:
 	def __init__(self):
-		self.name = inputFileNameQuickStatements
+		self.name = inputFileNameForQuickStatements
 		self.pValueList = []
 	def openCSVtoWrite(self):
 		if nonWikiRef:
-			self.outputCSVRef = open(self.name+'-output-ref-qs.csv', 'w')
-			self.csvWriterRef = csv.writer(self.outputCSVRef)
+			self.outputCSVRef = open(self.name[:-4]+'-output-ref-qs.csv', 'w')
+			self.csvWriterRef = csv.writer(self.outputCSVRef, delimiter = '	')
 			self.csvWriterRef.writerow(rowQSRef)
 		else:
-			self.outputCSV = open(self.name+'-output-qs.csv', 'w')
-			self.csvWriter = csv.writer(self.outputCSV)
+			self.outputCSV = open(self.name[:-4]+'-output-qs.csv', 'w')
+			self.csvWriter = csv.writer(self.outputCSV, delimiter = '	')
 			self.csvWriter.writerow(rowQSallWP)
 
-			self.outputCSVALT = open(self.name+'-output-alt'+pValue[1][1]+'.csv', 'w')
+			self.outputCSVALT = open(self.name[:-4]+'-output-alt'+pValue[1][1]+'.csv', 'w')
 			self.csvWriterALT = csv.writer(self.outputCSVALT)
 			self.csvWriterALT.writerow(rowEdit)
 
-			self.outputCSVNEW = open(self.name+'-output-NEW'+pValue[1][1]+'.csv', 'w')
+			self.outputCSVNEW = open(self.name[:-4]+'-output-NEW'+pValue[1][1]+'.csv', 'w')
 			self.csvWriterNEW = csv.writer(self.outputCSVNEW)
 			self.csvWriterNEW.writerow(rowEdit)
 
 	def preparePValueList(self):
-		with open(pValueListName+'.csv', 'r') as f:
+		with open(pValueListName, 'r') as f:
 			firstline = True
 			reader = csv.reader(f)
 			for line in reader:
@@ -51,7 +49,7 @@ class QuickStatement:
 #do you need to open the file in universal-newline mode?"
 #then you should save the document as plan text csv file again
 	def parseInputFile(self):
-		with open(self.name+'.csv','r') as csvFile:
+		with open(self.name,'r') as csvFile:
 			self.openCSVtoWrite()
 			firstline = True
 			reader = csv.reader(csvFile)
