@@ -90,6 +90,7 @@ class References:
 
 	def openRefLink(self, links):
 		linkandContext = {}
+		foundReferences = 0
 		for index,link in enumerate(links):
 			logging.info(link)
 			context = []
@@ -104,7 +105,9 @@ class References:
 			html = unicodedata.normalize('NFKD', html).encode('ascii','ignore')
 			context = self.findKeyword(html, link)
 			linkandContext[link] = context
-			if index == refLinkLimit - 1:
+			if context:
+				foundReferences += 1
+			if foundReferences == refLinkLimit:
 				break
 		logging.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 		logging.info(linkandContext)
