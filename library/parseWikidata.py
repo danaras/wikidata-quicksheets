@@ -6,12 +6,17 @@ import logging
 
 
 class parseWikidata:
-	def __init__(self,language,title):
+	def __init__(self,language,title,qid, useQID):
 		self.language = language
+		self.useQID = useQID
 		self.title = title
+		self.qid = qid
 		self.pData = {}
 	def getWikiData(self):
-		request = Request('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&titles='+self.title+'&languages='+self.language+'&props=claims%7Clabels&format=json')
+		if self.useQID:
+			request = Request('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&ids='+self.qid+'&languages='+self.language+'&props=claims%7Clabels&format=json')
+		else:
+			request = Request('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&titles='+self.title+'&languages='+self.language+'&props=claims%7Clabels&format=json')
 		logging.info('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&titles='+self.title+'&languages='+self.language+'&props=claims%7Clabels&format=json')
 		try:
 			response = urlopen(request, timeout=5)

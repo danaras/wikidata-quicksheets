@@ -5,11 +5,11 @@ lookForReferences = False
 matchCategories = True
 
 #This is the property you are searching for
-myProperty = ['P106','occupation']
-#myProperty = ['P172','ethnic group']
+# myProperty = ['P106','occupation']
+myProperty = ['P172','ethnic group']
 
 #This is the name of the file that has your input list
-inputFileNameQuickSheets = 'testList.csv'
+inputFileNameQuickSheets = 'AA-first50-wd.csv'
 
 
 #Gender

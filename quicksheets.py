@@ -64,13 +64,23 @@ if getReferences:
 with open(inputFileName+'.csv','rb') as csvfile:
 	reader = csv.reader(csvfile)
 	for row in reader:
-		if firstline:    #skip first line
+		qid = ''
+		info = list(row)
+		if firstline:
+			if 'qid' in info[0].lower():
+				qidDocument = True
+			else:
+				qidDocument = False
+			   #skip first line
 			firstline = False
 			continue
-		info = list(row) #get the row as a list
 		# langTitle = info[0]
 		try:
-			language = info[0] #get the language
+			if qidDocument:
+				language = "en"
+				qid = info[0].replace('wd:','')
+			else:
+				language = info[0] #get the language
 		except:
 			logging.info("no lang found")
 		# titleOriginal = langTitle.split(':')[1]
@@ -84,10 +94,10 @@ with open(inputFileName+'.csv','rb') as csvfile:
 			logging.info(titleWP)
 		except:
 			logging.info("title couldn't be read from input file")
-		WD = parseWikidata(language,title) #call the wikidata parsing class
+		WD = parseWikidata(language,title,qid,qidDocument) #call the wikidata parsing class
 		WP = parseWikipedia(language,titleWP) #call the wikipedia parsing class
 		jsonData = WD.getWikiData() #get the wikidata json object
-		if jsonData:
+		if jsonData and qidDocument==False:
 			qid = WD.getQID() #get the qid for the object
 		if qid:
 			if str(qid) == "-1": #if the qid returns -1 check if it has a redirect
@@ -170,7 +180,6 @@ with open(inputFileName+'.csv','rb') as csvfile:
 				outputOther.flush()
 		#here we are resetting the following values
 		keys = []
-		qid = ''
 		p1 = ''
 		p2 = ''
 		language = ''

@@ -1,6 +1,6 @@
 from userSettings import *
 debug = False
-
+qidDocument = False
 minCount = 5
 popularCount = [997,100]
 wikipediaOptions = [["en","Q328"],["es","Q8449"],["de","Q48183"],["fr","Q8447"],["pt","Q11921"]]
