@@ -1,8 +1,7 @@
 import os, csv
-import logging
+import logging, re
 # from fuzzywuzzy import fuzz
 from masterSettings import *
-
 
 def findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence):
 	lines = []
@@ -32,20 +31,26 @@ def findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOrigina
 					popular = ' '
 				qidLink = info[0].split('/')
 				pqid = qidLink[len(qidLink)-1]
-				pValueList.append([info[1],pqid,popular,info[2]])
-	# logging.info(occupations)
+				pValueAlts= []
+				alt = info[4].split(', ')
+				pValueAlts.extend(alt)
+				pValueList.append([info[1],pValueAlts,pqid,popular,info[2]])
+	# logging.info(pValueList)
 	firstSentence = str(firstSentence)
 	logging.info("----------------------------------\n"+firstSentence+"\n------------------------------------\n")
 	# outputTXT.write("----------------------------------------\n"+firstSentence+"\n")
 	for index, x in enumerate(pValueList):
-		if x[0] in firstSentence:
+		# print x[0]
+		searchKeywordMain = re.search(r'\b'+re.escape(x[0])+r'\b',firstSentence, re.IGNORECASE)
+
+		if searchKeywordMain:
 			found = True
 			p2Value = x[0]
-			p2 = x[1]
+			p2 = x[2]
 			if os.stat(fileName).st_size == 0:
 				# csvWriter.writerow(['QID of person', 'P106', 'QID of occupation', 'stated in', 'enwiki'])
 				csvWriter.writerow(rowEdit)
-			csvWriter.writerow([language,titleOriginal,qid,p1,p1Value,p2,x[2],"",p2Value,x[3],'',firstSentence])
+			csvWriter.writerow([language,titleOriginal,qid,p1,p1Value,p2,x[3],"",p2Value,x[4],'',firstSentence])
 			readerDuplicate = open(fileName, "r")
 			for row in readerDuplicate:
 				if row in lines:
@@ -58,4 +63,29 @@ def findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOrigina
 				writerDuplicate.write(line)
 			writerDuplicate.close()
 			outputCSV.flush()
+		else:
+			print x[1]
+			for value in x[1]:
+				searchKeywordAlt = re.search(r'\b'+re.escape(value)+r'\b',firstSentence, re.IGNORECASE)
+				if searchKeywordAlt and value:
+					print value+" ---->> "+firstSentence
+					found = True
+					p2Value = x[0]
+					p2 = x[2]
+					if os.stat(fileName).st_size == 0:
+						# csvWriter.writerow(['QID of person', 'P106', 'QID of occupation', 'stated in', 'enwiki'])
+						csvWriter.writerow(rowEdit)
+					csvWriter.writerow([language,titleOriginal,qid,p1,p1Value,p2,x[3],"",p2Value,x[4],'',firstSentence])
+					readerDuplicate = open(fileName, "r")
+					for row in readerDuplicate:
+						if row in lines:
+							continue
+						else:
+							lines.append(row)
+
+					writerDuplicate = open(fileName, "w")
+					for line in lines:
+						writerDuplicate.write(line)
+					writerDuplicate.close()
+					outputCSV.flush()
 	return found

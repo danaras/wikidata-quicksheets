@@ -67,17 +67,19 @@ with open(inputFileName+'.csv','rb') as csvfile:
 		qid = ''
 		info = list(row)
 		if firstline:
-			if 'qid' in info[0].lower():
+			if any(s in info[0].lower() for s in ["item", "qid"]):
 				qidDocument = True
 			else:
 				qidDocument = False
 			   #skip first line
+			print qidDocument
 			firstline = False
 			continue
 		# langTitle = info[0]
 		try:
 			if qidDocument:
 				language = "en"
+				qid = info[0].replace('http://www.wikidata.org/entity/','')
 				qid = info[0].replace('wd:','')
 			else:
 				language = info[0] #get the language
