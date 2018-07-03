@@ -8,7 +8,7 @@ def outputFiles(inputFileName, qid, occupation, occupationQID,title, language, p
 	output = open(inputFileName+" Outputs/Category Outputs CSV/"+occupation+occupationQID+'.csv', 'ab+')
 	csvWriter = csv.writer(output)
 	outputQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.csv', 'ab+')
-	csvWriterQS = csv.writer(outputQS)
+	csvWriterQS = csv.writer(outputQS, delimiter = '	')
 
 	# logging.info("length ===================== "+str(os.stat('Category Outputs/'+occupation+occupationQID+'.csv').st_size))
 	if os.stat(inputFileName+" Outputs/Category Outputs CSV/"+occupation+occupationQID+'.csv').st_size == 0:
