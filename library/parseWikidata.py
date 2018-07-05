@@ -14,10 +14,10 @@ class parseWikidata:
 		self.pData = {}
 	def getWikiData(self):
 		if self.useQID:
-			request = Request('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&ids='+self.qid+'&languages='+self.language+'&props=claims%7Clabels&format=json')
+			request = Request('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&ids='+self.qid+'&languages='+self.language+'&props=claims%7Clabels%7Csitelinks/urls&sitefilter='+self.language+'wiki&format=json')
 		else:
-			request = Request('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&titles='+self.title+'&languages='+self.language+'&props=claims%7Clabels&format=json')
-		logging.info('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&titles='+self.title+'&languages='+self.language+'&props=claims%7Clabels&format=json')
+			request = Request('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&titles='+self.title+'&languages='+self.language+'&props=claims%7Clabels%7Csitelinks/urls&sitefilter='+self.language+'wiki&format=json')
+		logging.info('https://www.wikidata.org/w/api.php?action=wbgetentities&sites='+self.language+'wiki&titles='+self.title+'&languages='+self.language+'&props=claims%7Clabels%7Csitelinks/urls&sitefilter='+self.language+'wiki&format=json')
 		try:
 			response = urlopen(request, timeout=5)
 			wikiData = response.read()
@@ -26,6 +26,13 @@ class parseWikidata:
 			return jsonData
 		except:
 		    logging.info('General error. Cannot get the wikidata json')
+	def getWikipediaLink(self):
+		try:
+			wikipediaLink = ''
+			wikipediaLink = self.jsonData["entities"][self.qid]["sitelinks"][self.language+'wiki']["url"]
+			return wikipediaLink
+		except:
+			logging.info('Error, cannot get wikilink')
 
 	def getQID(self):
 		try:

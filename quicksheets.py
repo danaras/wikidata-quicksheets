@@ -99,8 +99,12 @@ with open(inputFileName+'.csv','rb') as csvfile:
 		except:
 			logging.info("title couldn't be read from input file")
 		WD = parseWikidata(language,title,qid,qidDocument) #call the wikidata parsing class
-		WP = parseWikipedia(language,titleWP) #call the wikipedia parsing class
 		jsonData = WD.getWikiData() #get the wikidata json object
+		WPlink = ''
+		if jsonData:
+			WPlink = WD.getWikipediaLink()
+			print WPlink
+		WP = parseWikipedia(language,titleWP) #call the wikipedia parsing class
 		if jsonData and qidDocument==False:
 			qid = WD.getQID() #get the qid for the object
 		if qid:
@@ -120,7 +124,6 @@ with open(inputFileName+'.csv','rb') as csvfile:
 		logging.info(WD.pData)
 		# logging.info(pList21)
 		p1 = WD.pData[pValues[0][0]][0].decode().encode('utf-8')
-
 		p1Value = WD.pData[pValues[0][0]][1].decode().encode('utf-8')
 		p2 = WD.pData[pValues[1][0]][0].decode().encode('utf-8')
 		p2Value = WD.pData[pValues[1][0]][1].decode().encode('utf-8')
@@ -130,7 +133,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 				#if the title is a specified gender and has the secondary P value write to the good.csv file
 				if getReferences:
 					allInfo = {}
-					ref = References(titleOriginal, p2Value)
+					ref = References(titleOriginal, p2Value, WPlink)
 					refHTML = ref.getWikiHTML()
 					# logging.info(laHTML)
 					refLinks = ref.findReferences(refHTML)
@@ -146,6 +149,44 @@ with open(inputFileName+'.csv','rb') as csvfile:
 
 				csvWriterFemaleGood.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
 				outputFemaleGood.flush()
+			elif defaultEthnicGroup[0]:
+				if getReferences:
+					allInfo = {}
+					ref = References(titleOriginal, defaultEthnicGroup[0], WPlink)
+					refHTML = ref.getWikiHTML()
+					# logging.info(laHTML)
+					refLinks = ref.findReferences(refHTML)
+					# logging.info(laLinks)
+					allInfo = ref.openRefLink(refLinks)
+					logging.info(allInfo)
+					for link in refLinks:
+						if link in allInfo:
+							for context in allInfo[link]:
+								logging.info(defaultEthnicGroup[0] + " ------------ " + link + " -------- " + context)
+								csvWriterRef.writerow([language, titleOriginal, qid, p1, p1Value, defaultEthnicGroup[1], defaultEthnicGroup[0],'',link, context])
+								outputRef.flush()
+				if useCategories:
+				#if the title is a specified p1Value and doesn't have the secondary P value check the categories
+					foundCat = getQidFromCategories(inputFileName,matrixName, False, titleWP, qid, language, p1, p1Value, firstSentence)
+					if not foundCat:
+						#if the title is a specified p1Value and doesn't have the secondary P value and not in the categorie, check the  grep categories
+						foundGrepCat = getQidFromCategories(inputFileName,matrixGrepName, True, titleWP, qid, language, p1, p1Value, firstSentence)
+						if useFirstSentence:
+							if not foundGrepCat:
+								#if not found in categories then find p2Value through WP first sentence
+								foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence)
+								if not foundFirstSentence:
+									csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+									outputFemaleLack.flush()
+				else:
+					if useFirstSentence:
+						foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence)
+						if not foundFirstSentence:
+							csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+							outputFemaleLack.flush()
+					else:
+						csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+						outputFemaleLack.flush()
 			else:
 				if useCategories:
 				#if the title is a specified p1Value and doesn't have the secondary P value check the categories

@@ -7,7 +7,6 @@ class parseWikipedia():
 	def __init__(self,language, titleWP):
 		self.language = language
 		self.titleWP = titleWP
-
 	def getRedirect(self):
 		redirect = Request('https://'+self.language+'.wikipedia.org/w/api.php?action=query&titles='+self.titleWP+'&redirects=yes&format=json')
 		try:

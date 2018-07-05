@@ -10,12 +10,12 @@ from masterSettings import *
 
 #TODO ask about where References class should be used, because it will slow the code a lot.
 class References:
-	def __init__(self, title, pValue):
+	def __init__(self, title, pValue, WPlink):
 		self.title = title
 		self.pValue = pValue
 		self.refLinks = []
 		self.plistName = pValueListName
-
+		self.WPlink = WPlink
 	def getAsKnownAs(self):
 		pValueList = []
 		firstline = True
@@ -119,25 +119,30 @@ class References:
 		refLinks = []
 		# foundRef.write(name+'\n')
 		inReferences = False
-		for line in text.splitlines():
-			if '<ol class="references">' in line:
-				inReferences = True
-				logging.info("in references")
-			if inReferences:
-				link = re.search(r'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)',line)
-				if link:
-					refLinks.append(link.group())
-				if '</ol>' in line:
-					inReferences = False
-					logging.info("out of references")
+		if text:
+			for line in text.splitlines():
+				if '<ol class="references">' in line:
+					inReferences = True
+					logging.info("in references")
+				if inReferences:
+					link = re.search(r'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)',line)
+					if link:
+						refLinks.append(link.group())
+					if '</ol>' in line:
+						inReferences = False
+						logging.info("out of references")
 		return refLinks[:refLinkLimit]
 
 	def getWikiHTML(self):
-		title = self.title.replace(' ', '_')
-		WPlink = "https://en.wikipedia.org/wiki/"
-		logging.info(WPlink + title)
+		if self.WPlink:
+			wikipediaLink = self.WPlink
+			logging.info("using wplink from wikidata" + wikipediaLink)
+		else:
+			title = self.title.replace(' ', '_')
+			wikipediaLink = "https://en.wikipedia.org/wiki/" + title
+			logging.info(wikipediaLink)
 		try:
-			response = urllib2.urlopen(WPlink + title, timeout=5)
+			response = urllib2.urlopen(wikipediaLink, timeout=5)
 			html = unicode(response.read(), errors = 'ignore')
 			html = unicodedata.normalize('NFKD', html).encode('ascii','ignore')
 			return html
@@ -156,7 +161,7 @@ if __name__ == "__main__":
 	logging.getLogger().setLevel(outlevel)
 
 	occupation = "African Americans"
-	lala = References("Harriet Hemings", occupation, "pList.csv")
+	lala = References("Mekeva McNeil", occupation, "../resources/"+pValueListName)
 	laHTML = lala.getWikiHTML()
 	# logging.info(laHTML)
 	laLinks = lala.findReferences(laHTML)
