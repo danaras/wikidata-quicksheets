@@ -130,7 +130,7 @@ class References:
 				if '</ol>' in line:
 					inReferences = False
 					logging.info("out of references")
-		return refLinks
+		return refLinks[:refLinkLimit]
 
 	def getWikiHTML(self):
 		title = self.title.replace(' ', '_')
