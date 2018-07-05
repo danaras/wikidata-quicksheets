@@ -79,8 +79,10 @@ with open(inputFileName+'.csv','rb') as csvfile:
 		try:
 			if qidDocument:
 				language = "en"
-				qid = info[0].replace('http://www.wikidata.org/entity/','')
-				qid = info[0].replace('wd:','')
+				info[0] = str(info[0]).replace('http://www.wikidata.org/entity/','')
+				info[0] = str(info[0]).replace('wd:','')
+				qid = info[0]
+				print qid
 			else:
 				language = info[0] #get the language
 		except:
