@@ -134,7 +134,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 		p1Value = WD.pData[pValues[0][0]][1].decode().encode('utf-8')
 		p2 = WD.pData[pValues[1][0]][0].decode().encode('utf-8')
 		p2Value = WD.pData[pValues[1][0]][1].decode().encode('utf-8')
-		logging.critical(qid+" --- "+titleOriginal+" --- "+p1+" --- "+p1Value)
+		print qid+" --- "+titleOriginal+" --- "+p1+" --- "+p1Value
 		if any(p1Value.lower() ==  s.lower() for s in genderSelect):
 			if p2Value:
 				#if the title is a specified gender and has the secondary P value write to the good.csv file
