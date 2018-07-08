@@ -18,11 +18,11 @@ class QuickStatement:
 			self.csvWriter = csv.writer(self.outputCSV, delimiter = '	')
 			self.csvWriter.writerow(rowQSallWP)
 
-			self.outputCSVALT = open(self.name[:-4]+'-output-alt'+pValue[1][1]+'.csv', 'w')
+			self.outputCSVALT = open(self.name[:-4]+'-output-alt'+myProperty[1]+'.csv', 'w')
 			self.csvWriterALT = csv.writer(self.outputCSVALT)
 			self.csvWriterALT.writerow(rowEdit)
 
-			self.outputCSVNEW = open(self.name[:-4]+'-output-NEW'+pValue[1][1]+'.csv', 'w')
+			self.outputCSVNEW = open(self.name[:-4]+'-output-NEW'+myProperty[1]+'.csv', 'w')
 			self.csvWriterNEW = csv.writer(self.outputCSVNEW)
 			self.csvWriterNEW.writerow(rowEdit)
 
@@ -63,17 +63,17 @@ class QuickStatement:
 						if 'y' == info[7]:
 							self.csvWriterRef.writerow([info[2],pValues[1][0],info[5],statedIn,info[8]])
 				else:
-					if info[8]:
-						if "new" in info[8]:
-							print "new found"
-							csvWriterNEW.writerow([info[0],info[1],info[2],info[3],info[4],"",x[3],x[2],"",info[10],"",info[11]])
-						else:
-							for x in wikipedias:
-								if x[0] in info[0]:
-									wikipediaQID = x[1]
-								else:
-									wikipediaQID = wpEn
-							csvWriter.writerow([info[2], propertyId, info[5], referencedIn, wikipediaQID])
+					if info[7]:
+						# if "new" in info[8]:
+						# 	print "new found"
+						# 	self.csvWriterNEW.writerow([info[0],info[1],info[2],info[3],info[4],"",x[3],x[2],"",info[10],"",info[11]])
+						# else:
+						for x in wikipedias:
+							if x[0] in info[0]:
+								wikipediaQID = x[1]
+							else:
+								wikipediaQID = wpEn
+						self.csvWriter.writerow([info[2], propertyId, info[5], referencedIn, wikipediaQID])
 					if info[10]:
 						self.preparePValueList()
 						for index, x in enumerate(self.pValueList):
