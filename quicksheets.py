@@ -77,7 +77,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 			else:
 				qidDocument = False
 			   #skip first line
-			print qidDocument
+			# print qidDocument
 			firstline = False
 			continue
 		# langTitle = info[0]
@@ -87,7 +87,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 				info[0] = str(info[0]).replace('http://www.wikidata.org/entity/','')
 				info[0] = str(info[0]).replace('wd:','')
 				qid = info[0]
-				print qid
+				# print qid
 			else:
 				language = info[0] #get the language
 		except:
@@ -108,7 +108,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 		WPlink = ''
 		if jsonData:
 			WPlink = WD.getWikipediaLink()
-			print WPlink
+			# print WPlink
 		WP = parseWikipedia(language,titleWP) #call the wikipedia parsing class
 		if jsonData and qidDocument==False:
 			qid = WD.getQID() #get the qid for the object
@@ -123,7 +123,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 					qid = WD.getQID()
 		hasWP = False
 		hasWP = WP.getWikipediaJSON() #get wikipedia json object
-		print "HAS WP ==================== "+str(hasWP)
+		# print "HAS WP ==================== "+str(hasWP)
 		if useFirstSentence:
 			firstSentence = WP.getFirstSentence()
 		WD.getPData(pValues[0][0])
@@ -134,7 +134,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 		p1Value = WD.pData[pValues[0][0]][1].decode().encode('utf-8')
 		p2 = WD.pData[pValues[1][0]][0].decode().encode('utf-8')
 		p2Value = WD.pData[pValues[1][0]][1].decode().encode('utf-8')
-		print titleOriginal+" --- "+p1+" --- "+p1Value
+		print qid+" --- "+titleOriginal+" --- "+p1+" --- "+p1Value
 		if any(p1Value.lower() ==  s.lower() for s in genderSelect):
 			if p2Value:
 				#if the title is a specified gender and has the secondary P value write to the good.csv file

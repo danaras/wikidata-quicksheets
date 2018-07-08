@@ -10,11 +10,11 @@ class QuickStatement:
 		self.pValueList = []
 	def openCSVtoWrite(self):
 		if nonWikiRef:
-			self.outputCSVRef = open(self.name[:-4]+'-output-ref-qs.csv', 'w')
+			self.outputCSVRef = open(self.name[:-4]+'-output-ref-qs.txt', 'w')
 			self.csvWriterRef = csv.writer(self.outputCSVRef, delimiter = '	')
 			self.csvWriterRef.writerow(rowQSRef)
 		else:
-			self.outputCSV = open(self.name[:-4]+'-output-qs.csv', 'w')
+			self.outputCSV = open(self.name[:-4]+'-output-qs.txt', 'w')
 			self.csvWriter = csv.writer(self.outputCSV, delimiter = '	')
 			self.csvWriter.writerow(rowQSallWP)
 
@@ -61,7 +61,7 @@ class QuickStatement:
 				if nonWikiRef:
 					if info[7]:
 						if 'y' == info[7]:
-							self.csvWriterRef.writerow([info[1],info[2],pValues[1][0],info[6],info[5],statedIn,info[8],info[9]])
+							self.csvWriterRef.writerow([info[2],pValues[1][0],info[5],statedIn,info[8]])
 				else:
 					if info[8]:
 						if "new" in info[8]:

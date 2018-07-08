@@ -64,11 +64,11 @@ def findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOrigina
 			writerDuplicate.close()
 			outputCSV.flush()
 		else:
-			print x[1]
+			# print x[1]
 			for value in x[1]:
 				searchKeywordAlt = re.search(r'\b'+re.escape(value)+r'\b',firstSentence, re.IGNORECASE)
 				if searchKeywordAlt and value:
-					print value+" ---->> "+firstSentence
+					logging.critical("Found in first sentence: "+value+" ---->> "+firstSentence)
 					found = True
 					p2Value = x[0]
 					p2 = x[2]

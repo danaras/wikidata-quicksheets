@@ -77,4 +77,4 @@ rowHuman = ['language','title','QID',pValues[0][0],pValues[0][1],pValues[1][0],p
 rowQS = ['QID of person', pValues[1][0], 'QID of '+pValues[1][1], 'stated in', 'enwiki']
 rowEdit = ['language','title','QID',pValues[0][0],pValues[0][1],pValues[1][0],'popular','accept value',pValues[1][1],pValues[1][1]+' description','alt '+pValues[1][1],'WP first sentence']
 rowQSallWP = ['QID','property id','property QID','referenced in','wikipediaQID']
-rowQSRef = ['title','QID','property id','property value','property QID', 'stated in', 'refLink', 'context']
+rowQSRef = ['QID','property id','property QID', 'stated in', 'refLink']
