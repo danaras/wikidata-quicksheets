@@ -39,9 +39,9 @@ outputFemaleGood = open(inputFileName+' Outputs/already has '+pValues[1][0]+'/go
 csvWriterFemaleGood = csv.writer(outputFemaleGood)
 csvWriterFemaleGood.writerow(rowHuman)
 #output file for female with no p2Va
-outputFemaleLack = open(inputFileName+' Outputs/needs human review/needs-'+pValues[1][1]+'.csv', 'w')
-csvWriterFemaleLack = csv.writer(outputFemaleLack)
-csvWriterFemaleLack.writerow(rowHuman)
+outputselectedGenderWithoutMyProperty = open(inputFileName+' Outputs/needs human review/needs-'+pValues[1][1]+'.csv', 'w')
+csvWriterselectedGenderWithoutMyProperty = csv.writer(outputselectedGenderWithoutMyProperty)
+csvWriterselectedGenderWithoutMyProperty.writerow(rowHuman)
 #output file for other
 outputOther = open(inputFileName+' Outputs/needs human review/output-other.csv', 'w')
 csvWriterOther = csv.writer(outputOther)
@@ -54,6 +54,11 @@ csvWriterOtherNoWD.writerow(rowHuman)
 outputOtherDeleted = open(inputFileName+' Outputs/needs human review/output-likelyDeleted.csv', 'w')
 csvWriterOtherDeleted = csv.writer(outputOtherDeleted)
 csvWriterOtherDeleted.writerow(rowHuman)
+
+outputyesWDnoWP = open(inputFileName+' Outputs/needs human review/output-yesWDnoWP.csv', 'w')
+csvWriteryesWDnoWP = csv.writer(outputyesWDnoWP)
+csvWriteryesWDnoWP.writerow(rowHuman)
+
 
 if getReferences:
 	outputRef = open(inputFileName+' Outputs/needs human review/output-references.csv', 'w')
@@ -116,7 +121,9 @@ with open(inputFileName+'.csv','rb') as csvfile:
 					title =  titleOriginal.replace(' ', '+')
 					jsonData = WD.getWikiData()
 					qid = WD.getQID()
-		WP.getWikipediaJSON() #get wikipedia json object
+		hasWP = False
+		hasWP = WP.getWikipediaJSON() #get wikipedia json object
+		print "HAS WP ==================== "+str(hasWP)
 		if useFirstSentence:
 			firstSentence = WP.getFirstSentence()
 		WD.getPData(pValues[0][0])
@@ -149,7 +156,7 @@ with open(inputFileName+'.csv','rb') as csvfile:
 
 				csvWriterFemaleGood.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
 				outputFemaleGood.flush()
-			elif defaultEthnicGroup[0]:
+			elif defaultEthnicGroup[0] and hasWP:
 				if getReferences:
 					allInfo = {}
 					ref = References(titleOriginal, defaultEthnicGroup[0], WPlink)
@@ -176,18 +183,19 @@ with open(inputFileName+'.csv','rb') as csvfile:
 								#if not found in categories then find p2Value through WP first sentence
 								foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence)
 								if not foundFirstSentence:
-									csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
-									outputFemaleLack.flush()
+									csvWriterselectedGenderWithoutMyProperty.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+									outputselectedGenderWithoutMyProperty.flush()
 				else:
 					if useFirstSentence:
 						foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence)
 						if not foundFirstSentence:
-							csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
-							outputFemaleLack.flush()
+							csvWriterselectedGenderWithoutMyProperty.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+							outputselectedGenderWithoutMyProperty.flush()
 					else:
-						csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
-						outputFemaleLack.flush()
-			else:
+						csvWriterselectedGenderWithoutMyProperty.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+						outputselectedGenderWithoutMyProperty.flush()
+
+			elif hasWP:
 				if useCategories:
 				#if the title is a specified p1Value and doesn't have the secondary P value check the categories
 					foundCat = getQidFromCategories(inputFileName,matrixName, False, titleWP, qid, language, p1, p1Value, firstSentence)
@@ -199,17 +207,20 @@ with open(inputFileName+'.csv','rb') as csvfile:
 								#if not found in categories then find p2Value through WP first sentence
 								foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence)
 								if not foundFirstSentence:
-									csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
-									outputFemaleLack.flush()
+									csvWriterselectedGenderWithoutMyProperty.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+									outputselectedGenderWithoutMyProperty.flush()
 				else:
 					if useFirstSentence:
 						foundFirstSentence = findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOriginal, firstSentence)
 						if not foundFirstSentence:
-							csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
-							outputFemaleLack.flush()
+							csvWriterselectedGenderWithoutMyProperty.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+							outputselectedGenderWithoutMyProperty.flush()
 					else:
-						csvWriterFemaleLack.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
-						outputFemaleLack.flush()
+						csvWriterselectedGenderWithoutMyProperty.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+						outputselectedGenderWithoutMyProperty.flush()
+			else:
+				csvWriteryesWDnoWP.writerow([language, titleOriginal, qid, p1, p1Value, p2, p2Value, firstSentence])
+				outputyesWDnoWP.flush()
 		else:
 			#if qid is -1 and it is not a redirect then check if there is a first firstSentence
 			#because if there is no first sentence it means that the title has been probably deleted

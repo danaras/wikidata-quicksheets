@@ -35,9 +35,14 @@ class parseWikipedia():
 			wikiPedia = responsePW.read()
 			jsonDataPW = json.loads(wikiPedia)
 			self.json = jsonDataPW
+			keys = self.json["query"]["pages"].keys()
+			if keys[0] == "-1":
+				return False
+			else:
+				return True
 		except:
 			logging.info("cannot get wikipedia 'extract' json object")
-
+			return False
 	def getFirstSentence(self):
 		try:
 			keys = self.json["query"]["pages"].keys()
