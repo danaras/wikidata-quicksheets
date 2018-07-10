@@ -66,7 +66,7 @@ if getReferences:
 	csvWriterRef.writerow(rowRef)
 
 #open the input file as a csv file
-with open(inputFileName+'.csv','rb') as csvfile:
+with open(inputFileName+'.csv','rU') as csvfile:
 	reader = csv.reader(csvfile)
 	for row in reader:
 		qid = ''

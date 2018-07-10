@@ -27,7 +27,7 @@ class QuickStatement:
 			self.csvWriterNEW.writerow(rowEdit)
 
 	def preparePValueList(self):
-		with open(pValueListName, 'r') as f:
+		with open(pValueListName, 'rU') as f:
 			firstline = True
 			reader = csv.reader(f)
 			for line in reader:
@@ -49,7 +49,7 @@ class QuickStatement:
 #do you need to open the file in universal-newline mode?"
 #then you should save the document as plan text csv file again
 	def parseInputFile(self):
-		with open(self.name,'r') as csvFile:
+		with open(self.name,'rU') as csvFile:
 			self.openCSVtoWrite()
 			firstline = True
 			reader = csv.reader(csvFile)

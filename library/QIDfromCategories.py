@@ -8,7 +8,7 @@ def outputFiles(inputFileName, qid, occupation, occupationQID,title, language, p
 	output = open(inputFileName+" Outputs/Category Outputs CSV/"+occupation+occupationQID+'.csv', 'ab+')
 	csvWriter = csv.writer(output)
 	outputQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.csv', 'ab+')
-	csvWriterQS = csv.writer(outputQS, delimiter = '	')
+	csvWriterQS = csv.writer(outputQS)
 
 	# logging.info("length ===================== "+str(os.stat('Category Outputs/'+occupation+occupationQID+'.csv').st_size))
 	if os.stat(inputFileName+" Outputs/Category Outputs CSV/"+occupation+occupationQID+'.csv').st_size == 0:
@@ -42,7 +42,7 @@ def outputFiles(inputFileName, qid, occupation, occupationQID,title, language, p
 		else:
 			linesQS.append(rowQS)
 
-	writerDuplicateQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.csv', "wb")
+	writerDuplicateQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.txt', "wb")
 	for lineQS in linesQS:
 		writerDuplicateQS.write(lineQS)
 	writerDuplicateQS.close()
@@ -59,7 +59,7 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 	matrixInfo = []
 	firstlineMatrix = True
 
-	with open('resources/'+matrixName, 'r') as matrixFile:
+	with open(matrixName, 'rU') as matrixFile:
 		reader = csv.reader(matrixFile)
 		for line in reader:
 			if firstlineMatrix:    #skip first line

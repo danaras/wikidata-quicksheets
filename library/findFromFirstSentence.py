@@ -15,7 +15,7 @@ def findFromFirstSentence(inputFileName,language, qid, p1, p1Value, titleOrigina
 	csvWriter = csv.writer(outputCSV)
 
 
-	with open('resources/'+pValueListName, 'r') as f:
+	with open('resources/'+pValueListName, 'rU') as f:
 		reader = csv.reader(f)
 		for line in reader:
 			if firstline:    #skip first line

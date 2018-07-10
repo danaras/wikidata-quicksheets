@@ -19,7 +19,7 @@ class References:
 	def getAsKnownAs(self):
 		pValueList = []
 		firstline = True
-		with open('resources/'+self.plistName, 'r') as f:
+		with open('resources/'+self.plistName, 'rU') as f:
 			reader = csv.reader(f)
 			for line in reader:
 				if firstline:    #skip first line
