@@ -1,19 +1,21 @@
 from urllib2 import Request, urlopen, URLError
 import os, json, csv
 import logging
+from collections import OrderedDict
 #output from categories:
 def outputFiles(inputFileName, qid, occupation, occupationQID,title, language, p21, gender, firstSentence):
 	lines = []
 	linesQS = []
 	output = open(inputFileName+" Outputs/Category Outputs CSV/"+occupation+occupationQID+'.csv', 'ab+')
 	csvWriter = csv.writer(output)
-	outputQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.csv', 'ab+')
+	outputQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.txt', 'ab+')
 	csvWriterQS = csv.writer(outputQS)
 
 	# logging.info("length ===================== "+str(os.stat('Category Outputs/'+occupation+occupationQID+'.csv').st_size))
 	if os.stat(inputFileName+" Outputs/Category Outputs CSV/"+occupation+occupationQID+'.csv').st_size == 0:
 		# csvWriter.writerow(['QID of person', 'P106', 'QID of occupation', 'stated in', 'enwiki'])
 		csvWriter.writerow(['language','title','QID','p21','gender','p106','occupation','pw first sentence'])
+
 	csvWriter.writerow([language, title, qid, p21, gender, occupationQID, occupation, firstSentence])
 	output.flush()
 
@@ -24,25 +26,28 @@ def outputFiles(inputFileName, qid, occupation, occupationQID,title, language, p
 		else:
 			lines.append(row)
 
-	writerDuplicate = open(inputFileName+" Outputs/Category Outputs CSV/"+occupation+occupationQID+'.csv', "wb")
+	writerDuplicate = open(inputFileName+" Outputs/Category Outputs CSV/"+occupation+occupationQID+'.csv', "w")
 	for line in lines:
 		writerDuplicate.write(line)
 	writerDuplicate.close()
 
 #Write quick statement csv's
-	if os.stat(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.csv').st_size == 0:
+	if os.stat(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.txt').st_size == 0:
 		csvWriterQS.writerow(['QID of person', 'P106', 'QID of occupation', 'stated in', 'enwiki'])
 	csvWriterQS.writerow([qid, 'P106', occupationQID,'S142','Q328'])
-	output.flush()
+	outputQS.flush()
+	outputQS.close()
 
-	readerDuplicateQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.csv', "rb")
+	readerDuplicateQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.txt', "rb")
 	for rowQS in readerDuplicateQS:
 		if rowQS in linesQS:
 			continue
 		else:
 			linesQS.append(rowQS)
+	readerDuplicateQS.close()
+	# print linesQS
 
-	writerDuplicateQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.txt', "wb")
+	writerDuplicateQS = open(inputFileName+" Outputs/Category Outputs QS/"+occupation+occupationQID+'.txt', "w")
 	for lineQS in linesQS:
 		writerDuplicateQS.write(lineQS)
 	writerDuplicateQS.close()
@@ -59,7 +64,7 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 	matrixInfo = []
 	firstlineMatrix = True
 
-	with open(matrixName, 'rU') as matrixFile:
+	with open("resources/"+matrixName, 'rU') as matrixFile:
 		reader = csv.reader(matrixFile)
 		for line in reader:
 			if firstlineMatrix:    #skip first line
@@ -67,10 +72,12 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 				continue
 			info = list(line)
 			matrixInfo.append(line)
+	# print matrixInfo
 	found = False
 	keys = []
 	categories = []
 	request = Request('https://en.wikipedia.org/w/api.php?action=query&prop=categories&titles='+title+'&format=json')
+	# print 'requesteeed'
 	try:
 		response = urlopen(request, timeout=5)
 		wikiData = response.read()
@@ -84,9 +91,12 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 	try:
 		categories=(jsonData['query']['pages'][keys[0]]['categories'])
 		logging.info(categories)
+		# print "lalalalalalala"
+
 	except:
 		logging.info("cannot find categories")
 	if categories:
+		# print len(categories)
 		for each in categories:
 			outputCat.write(title.replace('%20', ' ')+'\n')
 			outputCat.write(each['title'].encode('utf-8')+'\n')
@@ -97,7 +107,7 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 			if 'Category:' in category:
 				category = category[9:]
 			for index, x in enumerate(matrixInfo):
-
+				# print x[0]
 				if isItGrep:
 					#outputCat.write("matrix---------------"+x[0].lower()+'\n')
 					#outputCat.write("wp-------------------"+category.lower()+'\n')
@@ -109,6 +119,7 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 						occupation = x[1]
 						occupationQID = x[2]
 						#outputCat.write("+++++++++++++++++++++++++++++++"+occupation+"+++++++"+qid+'\n')
+						# print occupationQID
 						outputFiles(inputFileName,qid, occupation, occupationQID, title.replace('%20',' '), language, p21, gender, firstSentence)
 						found = True
 					else:
@@ -124,5 +135,6 @@ def getQidFromCategories(inputFileName, matrixName, isItGrep, title, qid,languag
 						found = False
 				if found:
 					totalFound = True
+				# print "loooop no."+str(index)
 	logging.info("*****************************"+str(totalFound))
 	return totalFound
