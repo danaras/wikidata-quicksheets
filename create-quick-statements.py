@@ -82,7 +82,7 @@ class QuickStatement:
 						self.csvWriter.writerow([info[2], propertyId, info[5], referencedIn, wikipediaQID])
 					if info[10]:
 						self.preparePValueList()
-						print info[10]
+						# print info[10]
 						for index, x in enumerate(self.pValueList):
 							if x[0] == info[10]:
 								p2Value = x[0]
