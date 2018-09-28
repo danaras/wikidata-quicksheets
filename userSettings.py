@@ -1,5 +1,5 @@
 
-#This is the type of QuickSheets you want to prepare. Comment out the one you are not doing by putting a # at the start of that line.
+#This is the type of QuickSheets you want to prepare. Assign False to the one you are not doing.
 matchCategories = True
 searchFirstSentence = True
 lookForReferences = False
