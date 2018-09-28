@@ -26,7 +26,12 @@ class QuickStatement:
 			self.csvWriterNEW = csv.writer(self.outputCSVNEW)
 			self.csvWriterNEW.writerow(rowEdit)
 
+			# self.debugcsv = open('lalallalala.csv', 'w')
+			# self.debugwrite = csv.writer(self.debugcsv)
+			# self.debugwrite.writerow(['valueLabel','qid','popular','description'])
+
 	def preparePValueList(self):
+		self.pValueList = []
 		with open('resources/'+pValueListName, 'rU') as f:
 			firstline = True
 			reader = csv.reader(f)
@@ -45,6 +50,7 @@ class QuickStatement:
 					qidLink = info[0].split('/')
 					qid = qidLink[len(qidLink)-1]
 					self.pValueList.append([info[1],qid,popular,info[2]])
+					# self.debugwrite.writerow([info[1],qid,popular,info[2]])
 #if it throws an error saying "_csv.Error: new-line character seen in unquoted field -
 #do you need to open the file in universal-newline mode?"
 #then you should save the document as plan text csv file again
@@ -76,10 +82,13 @@ class QuickStatement:
 						self.csvWriter.writerow([info[2], propertyId, info[5], referencedIn, wikipediaQID])
 					if info[10]:
 						self.preparePValueList()
+						print info[10]
 						for index, x in enumerate(self.pValueList):
 							if x[0] == info[10]:
 								p2Value = x[0]
 								p2QID = x[1]
+								# print str(index) + "---"+str(info[1])+"---"+str(p2Value)
+								# print x
 								self.csvWriterALT.writerow([info[0],info[1],info[2],info[3],info[4],p2QID,x[2],"",p2Value,x[3],info[10],info[11]])
 								self.csvWriter.writerow([info[2], propertyId, p2QID, referencedIn, wikipediaQID])
 
