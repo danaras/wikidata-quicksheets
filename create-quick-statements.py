@@ -27,7 +27,7 @@ class QuickStatement:
 			self.csvWriterNEW.writerow(rowEdit)
 
 	def preparePValueList(self):
-		with open(pValueListName, 'rU') as f:
+		with open('resources/'+pValueListName, 'rU') as f:
 			firstline = True
 			reader = csv.reader(f)
 			for line in reader:
@@ -80,8 +80,8 @@ class QuickStatement:
 							if x[0] == info[10]:
 								p2Value = x[0]
 								p2QID = x[1]
-								csvWriterALT.writerow([info[0],info[1],info[2],info[3],info[4],p2QID,x[3],x[2],"",p2Value,info[10],info[11]])
-								csvWriter.writerow([info[2], propertyId, p2QID, referencedIn, wikipediaQID])
+								self.csvWriterALT.writerow([info[0],info[1],info[2],info[3],info[4],p2QID,x[2],"",p2Value,x[3],info[10],info[11]])
+								self.csvWriter.writerow([info[2], propertyId, p2QID, referencedIn, wikipediaQID])
 
 					wikipediaQID = ''
 if __name__ == "__main__":
