@@ -81,6 +81,11 @@ class QuickStatement:
 								wikipediaQID = wpEn
 						self.csvWriter.writerow([info[2], propertyId, info[5], referencedIn, wikipediaQID])
 					if info[10]:
+						for x in wikipedias:
+							if x[0] in info[0]:
+								wikipediaQID = x[1]
+							else:
+								wikipediaQID = wpEn
 						self.preparePValueList()
 						# print info[10]
 						for index, x in enumerate(self.pValueList):
